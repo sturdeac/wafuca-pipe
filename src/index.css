@@ -39,3 +39,7 @@ code {
   padding-bottom: 1rem;
   background-color: rgba(0,0,0,.7);
 }
+
+.reg-body {
+  height: 500px;
+}

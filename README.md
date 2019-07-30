@@ -15,6 +15,7 @@ This project was created using CREATE-REACT-APP
 - redux
 - react-redux
 - reduc-thunk
+- classnames
 
 ## in the client folder install
 - body-parser

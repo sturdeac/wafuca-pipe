@@ -13,25 +13,6 @@ class Content extends Component {
   render() {
     return (
       <div>
-        <header className="masthead text-left text-white">
-          <div className="masthead-content h-100">
-            <div className="container vertical-center">
-              <div className="text-bg">
-                <h1>
-                  <a href="#hd2" className="fancy-span mt-5 text-white">
-                    MK4 HD2 UPGRADE →
-                  </a>
-                </h1>
-
-                <h2>
-                  <a href="#order" className="fancy-span mt-5 text-white">
-                    PRE-ORDER →
-                  </a>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </header>
         <section>
           <div className="container my-5 p-5" id="hd2">
             <div className="row align-items-center my-5">
