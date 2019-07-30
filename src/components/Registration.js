@@ -69,7 +69,7 @@ class Registration extends Component {
       <div className="reg-body">
         <div className="container h-100">
           <div className="row h-100 align-items-center">
-            <div className="col-sm-12 col-md-6 mx-auto">
+            <div className="col-xs-12 col-sm-8 col-md-6 mx-auto">
               <div className="card">
                 <div className="card-body">
                   <form>
@@ -112,7 +112,7 @@ class Registration extends Component {
                         }}
                         size="visible"
                         render="explicit"
-                        sitekey="<SITEKEY>"
+                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                         onloadCallback={this.onLoadRecaptcha}
                         verifyCallback={this.verifyCallback}
                       />
