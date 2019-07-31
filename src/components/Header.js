@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import { logo } from "../img/index.js";
 
 class Header extends Component {
@@ -38,9 +38,9 @@ class Header extends Component {
             <div className="container vertical-center">
               <div className="text-bg">
                 <h1>
-                  <a href="#hd2" className="fancy-span mt-5 text-white">
+                  <Link to="/#hd2" className="fancy-span mt-5 text-white">
                     MK4 HD2 UPGRADE →
-                  </a>
+                  </Link>
                 </h1>
 
                 <h2>

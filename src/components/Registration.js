@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import classnames from "classnames";
 import { loadReCaptcha, ReCaptcha } from "react-recaptcha-google";
+import getCaptchaKey from "./containers/environment";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../actions/regActions";
+import { withRouter } from "react-router-dom";
 
 class Registration extends Component {
   constructor() {
@@ -43,12 +48,12 @@ class Registration extends Component {
         captcha: ""
       });
 
-      // const newUser = {
-      //   name: this.state.name,
-      //   email: this.state.email
-      // };
+      const newUser = {
+        name: this.state.name,
+        email: this.state.email
+      };
 
-      // this.props.registerUser(newUser, this.props.history);
+      this.props.registerUser(newUser, this.props.history);
     }
   };
 
@@ -86,6 +91,7 @@ class Registration extends Component {
                         placeholder="Enter Name"
                         onChange={this.onChange}
                       />
+                      <span>{errors.name}</span>
                     </div>
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
@@ -104,6 +110,7 @@ class Registration extends Component {
                       <small id="emailHelp" className="form-text text-muted">
                         We'll never share your email with anyone else.
                       </small>
+                      <span>{errors.email}</span>
                     </div>
                     <div>
                       <ReCaptcha
@@ -112,7 +119,7 @@ class Registration extends Component {
                         }}
                         size="visible"
                         render="explicit"
-                        sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                        sitekey={ getCaptchaKey() }
                         onloadCallback={this.onLoadRecaptcha}
                         verifyCallback={this.verifyCallback}
                       />
@@ -134,4 +141,15 @@ class Registration extends Component {
   }
 }
 
-export default Registration;
+Registration.propTypes = {
+  registerUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(Registration));

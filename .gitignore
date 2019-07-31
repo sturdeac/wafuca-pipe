@@ -4,6 +4,7 @@
 /node_modules
 /server/node_modules
 /server/config/keys.js
+src/components/containers/config/keys.js
 /.pnp
 .pnp.js
 
