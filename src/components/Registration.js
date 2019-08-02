@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import classnames from "classnames";
 import { loadReCaptcha, ReCaptcha } from "react-recaptcha-google";
 import getCaptchaKey from "./containers/environment";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { registerUser } from "../actions/regActions";
-import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 class Registration extends Component {
   constructor() {
@@ -14,6 +11,7 @@ class Registration extends Component {
       name: "",
       email: "",
       captcha: "",
+      success: "",
       errors: {}
     };
     this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
@@ -22,14 +20,6 @@ class Registration extends Component {
 
   componentDidMount() {
     loadReCaptcha();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
   }
 
   onChange = e => {
@@ -53,8 +43,22 @@ class Registration extends Component {
         email: this.state.email
       };
 
-      this.props.registerUser(newUser, this.props.history);
+      this.onLoadRecaptcha();
+      this.setState({ errors: {} });
+      this.registerUser(newUser);
     }
+  };
+
+  registerUser = userData => {
+    axios
+      .post("/api/users/register", userData)
+      .then(
+        this.setState({
+          success:
+            "Thank you for registering! We will contact you when further action is needed."
+        })
+      )
+      .catch(err => this.setState({ errors: err.response.data }));
   };
 
   onLoadRecaptcha() {
@@ -77,6 +81,7 @@ class Registration extends Component {
             <div className="col-xs-12 col-sm-8 col-md-6 mx-auto">
               <div className="card">
                 <div className="card-body">
+                  <span className="text-success">{this.state.success}</span> 
                   <form>
                     <div className="form-group">
                       <label htmlFor="name">Name</label>
@@ -91,7 +96,7 @@ class Registration extends Component {
                         placeholder="Enter Name"
                         onChange={this.onChange}
                       />
-                      <span>{errors.name}</span>
+                      <span className="text-danger">{errors.name}</span>
                     </div>
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
@@ -110,7 +115,7 @@ class Registration extends Component {
                       <small id="emailHelp" className="form-text text-muted">
                         We'll never share your email with anyone else.
                       </small>
-                      <span>{errors.email}</span>
+                      <span className="text-danger">{errors.email}</span>
                     </div>
                     <div>
                       <ReCaptcha
@@ -119,7 +124,7 @@ class Registration extends Component {
                         }}
                         size="visible"
                         render="explicit"
-                        sitekey={ getCaptchaKey() }
+                        sitekey={getCaptchaKey()}
                         onloadCallback={this.onLoadRecaptcha}
                         verifyCallback={this.verifyCallback}
                       />
@@ -141,15 +146,4 @@ class Registration extends Component {
   }
 }
 
-Registration.propTypes = {
-  registerUser: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  errors: state.errors
-});
-
-export default connect(
-  mapStateToProps,
-  { registerUser }
-)(withRouter(Registration));
+export default Registration;
